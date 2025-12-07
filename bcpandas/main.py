@@ -352,8 +352,8 @@ def to_sql(
     dtype: Optional[dict] = None,
     process_dest_table: bool = True,
     print_output: bool = True,
-    delimiter: Optional[str] = None,
-    quotechar: Optional[str] = None,
+    delimiter: Optional[str|list] = [],
+    quotechar: Optional[str|list] = [],
     encoding: Optional[str] = None,
     work_directory: Optional[Path] = None,
     collation: str = sql_collation,
@@ -435,8 +435,8 @@ def to_sql(
     if index:
         df = df.reset_index()
 
-    delim = get_delimiter(df) if delimiter is None else delimiter
-    _quotechar = get_quotechar(df) if quotechar is None else quotechar
+    delim = get_delimiter(df, additional_char=delimiter)
+    _quotechar = get_quotechar(df, additional_char=quotechar)
 
     # save to temp path
     csv_file_path = get_temp_file(work_directory)
